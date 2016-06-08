@@ -1,10 +1,10 @@
-FROM scaleway/alpine
+FROM container4armhf/armhf-alpine:3.4
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN addgroup -S redis && adduser -S -G redis redis
 
 # grab su-exec for easy step-down from root
-RUN apk add 'su-exec>=0.2'
+RUN apk add --no-cache 'su-exec>=0.2'
 
 ENV REDIS_VERSION 3.2.0
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-3.2.0.tar.gz
@@ -12,7 +12,7 @@ ENV REDIS_DOWNLOAD_SHA1 0c1820931094369c8cc19fc1be62f598bc5961ca
 
 # for redis-sentinel see: http://redis.io/topics/sentinel
 RUN set -x \
-	&& apk add --virtual .build-deps \
+	&& apk add --no-cache --virtual .build-deps \
 		gcc \
 		linux-headers \
 		make \
